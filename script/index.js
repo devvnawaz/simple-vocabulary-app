@@ -113,7 +113,7 @@ const displayLevelWord = (words) => {
         </h2>
       </div>
     `;
-    manageSpinner(false)
+    manageSpinner(false);
     return;
   }
 
@@ -180,3 +180,21 @@ const displayLesson = (lessons) => {
 };
 
 loadLessons();
+
+const input = document.getElementById("input-search");
+// removeActive();
+input.addEventListener("input", (e) => {
+  const searchValue = e.target.value.trim().toLowerCase(); // always up-to-date
+  // console.log(searchValue);
+
+  fetch("https://openapi.programming-hero.com/api/words/all")
+    .then((response) => response.json())
+    .then((data) => {
+      const allWords = data.data;
+      // console.log(allWords);
+      const filterWords = allWords.filter((word) =>
+        word.word.toLowerCase().includes(searchValue)
+      );
+      displayLevelWord(filterWords);
+    });
+});
