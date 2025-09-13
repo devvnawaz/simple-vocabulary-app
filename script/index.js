@@ -1,3 +1,13 @@
+const createElements = (arr) => {
+  // console.log(arr);
+  const htmlElements = arr.map((el) => `<span class="btn">${el}</span>`);
+  return htmlElements.join(" ");
+};
+
+const synonyms = ["hello", "hi", "hey"];
+
+createElements(synonyms);
+
 const loadLessons = () => {
   fetch("https://openapi.programming-hero.com/api/levels/all") // promise of response
     .then((response) => response.json()) // promise of json data
@@ -47,14 +57,16 @@ const loadWordDetail = async (id) => {
 } */
 
 const displayWordDetails = (word) => {
-  console.log(word);
+  // console.log(word);
   const wordDetailsContainer = document.getElementById(
     "word-details-container"
   );
   wordDetailsContainer.innerHTML = `
   <div class="">
             <h2 class="text-2xl font-bold">
-              ${word.word} (<i class="fa-solid fa-microphone-lines"></i> : ${word.pronunciation})
+              ${word.word} (<i class="fa-solid fa-microphone-lines"></i> : ${
+    word.pronunciation
+  })
             </h2>
           </div>
           <div class="">
@@ -67,9 +79,7 @@ const displayWordDetails = (word) => {
           </div>
           <div class="">
             <h2 class="font-bold bangla-font">সমার্থক শব্দ গুলো</h2>
-            <span class="btn">${word.synonyms[0]}</span>
-            <span class="btn">${word.synonyms[1]}</span>
-            <span class="btn">${word.synonyms[2]}</span>
+            <div class="">${createElements(word.synonyms)}</div>
           </div>
   `;
   document.getElementById("word_modal").showModal();
